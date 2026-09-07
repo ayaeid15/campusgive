@@ -151,3 +151,14 @@ main {
     direction: ltr !important;
     display: inline-block;
 }
+
+/* حل مشكلة تداخل الناف بار المثبت مع محتوى الصفحة */
+body {
+    padding-top: 100px !important;
+}
+
+/* ضبط انسيابية العرض على الشاشات المختلفة */
+main.container {
+    position: relative;
+    z-index: 1;
+}
