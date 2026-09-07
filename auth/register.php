@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include '../includes/db.php';
 include '../includes/header.php'; 
 include '../includes/navbar.php'; 
@@ -28,8 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $query = "INSERT INTO users (fullname, email, phone, password) VALUES ('$fullname', '$email', '$phone', '$hashed_password')";
             
             if (mysqli_query($conn, $query)) {
-                $message = "تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.";
-                $msg_type = "success";
+                $new_user_id = mysqli_insert_id($conn);
+                
+                $_SESSION['user_id']   = $new_user_id;
+                $_SESSION['user_name'] = $fullname;
+                $_SESSION['user_role'] = 'user';
+
+                $_SESSION['welcome_message'] = "أهلاً بك يا " . htmlspecialchars($fullname) . " في عائلة CampusGive! 🎓✨ يسعدنا انضمامك لتسهم في نشر الخير وتيسير الرحلة الدراسية على زملائك.";
+
+                header("Location: ../donations/browse.php");
+                exit();
             } else {
                 $message = "حدث خطأ أثناء التسجيل: " . mysqli_error($conn);
                 $msg_type = "danger";
