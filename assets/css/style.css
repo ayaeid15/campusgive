@@ -1,0 +1,83 @@
+:root {
+    /* Main Palette */
+    --primary-color: #6B2D5C;
+    --secondary-color: #8C4A60;
+    --accent-teal: #2A6B7C;
+    --bg-creamy: #FAF7F2;
+    --card-bg: #FFFFFF;
+    --text-dark: #2D252A;
+    --text-muted: #7A6F75;
+
+    /* Status Badges */
+    --badge-pending: #E69A46;
+    --badge-approved: #3A886A;
+    --badge-reserved: #2A6B7C;
+    --badge-completed: #6B2D5C;
+    --badge-rejected: #C94A4A;
+}
+
+body {
+    background-color: var(--bg-creamy);
+    color: var(--text-dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Custom Buttons */
+.btn-campus-primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-campus-primary:hover {
+    background-color: var(--secondary-color);
+    color: #ffffff;
+}
+
+/* Status Badges Style */
+.badge-status {
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge-pending {
+    background-color: rgba(230, 154, 70, 0.15);
+    color: var(--badge-pending);
+}
+
+.badge-approved {
+    background-color: rgba(58, 136, 106, 0.15);
+    color: var(--badge-approved);
+}
+
+.badge-reserved {
+    background-color: rgba(42, 107, 124, 0.15);
+    color: var(--badge-reserved);
+}
+
+.badge-completed {
+    background-color: rgba(107, 45, 92, 0.15);
+    color: var(--badge-completed);
+}
+
+.badge-rejected {
+    background-color: rgba(201, 74, 74, 0.15);
+    color: var(--badge-rejected);
+}
+
+.dir-ltr {
+    direction: ltr !important;
+    display: inline-block;
+}
