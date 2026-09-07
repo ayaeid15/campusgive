@@ -1,24 +1,32 @@
 :root {
-    /* Main Palette */
-    --primary-color: #6B2D5C;
-    --secondary-color: #8C4A60;
-    --accent-teal: #2A6B7C;
-    --bg-creamy: #FAF7F2;
-    --card-bg: #FFFFFF;
-    --text-dark: #2D252A;
-    --text-muted: #7A6F75;
+    /* Main Palette - الهوية الجديدة */
+    --primary-color: #683A46;
+    /* Deep Muted Plum */
+    --secondary-color: #A1525F;
+    /* Rose Mauve */
+    --accent-color: #C5757C;
+    /* Soft Dusty Rose */
+    --bg-creamy: #FAF6F3;
+    /* Warm Creamy Background */
+    --card-bg: #FDFBF7;
+    /* Creamy Glass White */
+    --text-dark: #140E1C;
+    /* Dark Espresso */
+    --text-muted: #6C5F63;
+    /* Warm Muted Gray */
 
-    /* Status Badges */
-    --badge-pending: #E69A46;
-    --badge-approved: #3A886A;
-    --badge-reserved: #2A6B7C;
-    --badge-completed: #6B2D5C;
+    /* Status Badges - شارات الحالة الناعمة */
+    --badge-pending: #D9822B;
+    --badge-approved: #2A6B7C;
+    --badge-reserved: #A85A32;
+    --badge-completed: #683A46;
     --badge-rejected: #C94A4A;
 }
 
+/* Base Style */
 body {
-    background-color: var(--bg-creamy);
-    color: var(--text-dark);
+    background-color: var(--bg-creamy) !important;
+    color: var(--text-dark) !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
     display: flex;
@@ -29,122 +37,45 @@ main {
     flex: 1;
 }
 
-/* Custom Buttons */
+/* Custom Buttons - الأزرار */
 .btn-campus-primary {
-    background-color: var(--primary-color);
-    color: #ffffff;
+    background-color: var(--primary-color) !important;
+    color: #ffffff !important;
     border: none;
     transition: all 0.3s ease;
 }
 
 .btn-campus-primary:hover {
-    background-color: var(--secondary-color);
-    color: #ffffff;
+    background-color: var(--secondary-color) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(104, 58, 70, 0.2);
 }
 
-/* Status Badges Style */
-.badge-status {
-    padding: 6px 14px;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
+.btn-campus-outline {
+    border: 1px solid var(--primary-color) !important;
+    color: var(--primary-color) !important;
+    background-color: transparent !important;
+    transition: all 0.3s ease;
 }
 
-.badge-pending {
-    background-color: rgba(230, 154, 70, 0.15);
-    color: var(--badge-pending);
+.btn-campus-outline:hover {
+    background-color: var(--primary-color) !important;
+    color: #ffffff !important;
 }
 
-.badge-approved {
-    background-color: rgba(58, 136, 106, 0.15);
-    color: var(--badge-approved);
-}
-
-.badge-reserved {
-    background-color: rgba(42, 107, 124, 0.15);
-    color: var(--badge-reserved);
-}
-
-.badge-completed {
-    background-color: rgba(107, 45, 92, 0.15);
-    color: var(--badge-completed);
-}
-
-.badge-rejected {
-    background-color: rgba(201, 74, 74, 0.15);
-    color: var(--badge-rejected);
-}
-
-.dir-ltr {
-    direction: ltr !important;
-    display: inline-block;
-}
-
-/* خلفية مريحة للعين */
-body {
-    background-color: #FAF7F2 !important;
-}
-
-/* الكروت ببوردر دافئ وهادئ */
+/* Cards Style - كروت التبرعات */
 .card {
-    border: 1px solid #EFEAE1 !important;
-    background-color: #FFFFFF;
+    border: 1px solid rgba(220, 200, 205, 0.6) !important;
+    background-color: var(--card-bg) !important;
     transition: all 0.25s ease-in-out;
 }
 
 .card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(107, 45, 92, 0.06) !important;
+    box-shadow: 0 8px 20px rgba(20, 14, 28, 0.06) !important;
 }
 
-/* شارة القسم: بني دافئ ناعم */
-.badge-category {
-    background-color: #F4EFEA !important;
-    color: #6B5B52 !important;
-    font-weight: 600;
-}
-
-/* شارات الحالة: موحدة وناعمة متناسقة مع البالتة */
-.badge-status {
-    padding: 5px 12px;
-    border-radius: 50px;
-    font-size: 0.78rem;
-    font-weight: 600;
-}
-
-/* متاح: تيل هادئ */
-.badge-approved {
-    background-color: #EBF4F5;
-    color: #2A6B7C;
-}
-
-/* محجوز: كافيه دافئ */
-.badge-reserved {
-    background-color: #F8ECE3;
-    color: #8C533E;
-}
-
-/* مكتمل: رمادي بورغندي ناعم */
-.badge-completed {
-    background-color: #F2EBF0;
-    color: #6B2D5C;
-}
-
-/* أزرار التفاصيل متناسقة مع الهوية */
-.btn-campus-outline {
-    border: 1px solid #2A6B7C !important;
-    color: #2A6B7C !important;
-    background-color: transparent;
-}
-
-.btn-campus-outline:hover {
-    background-color: #2A6B7C !important;
-    color: #FFFFFF !important;
-}
-
-/* تنسيقات هيكلية ومحاذاة الكروت */
 .card-body {
     display: flex !important;
     flex-direction: column !important;
@@ -152,7 +83,7 @@ body {
 
 .card-text {
     font-size: 0.88rem !important;
-    color: #6c757d !important;
+    color: var(--text-muted) !important;
     margin-bottom: 0 !important;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
@@ -169,7 +100,54 @@ body {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    border-top: 1px solid #EFEAE1 !important;
+    border-top: 1px solid rgba(220, 200, 205, 0.5) !important;
     margin-top: 1rem !important;
     padding-top: 0.8rem !important;
+}
+
+/* Badges - الشارات */
+.badge-category {
+    background-color: #F4EFEA !important;
+    color: #6B5B52 !important;
+    font-weight: 600;
+}
+
+.badge-status {
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge-pending {
+    background-color: rgba(217, 130, 43, 0.12);
+    color: var(--badge-pending);
+}
+
+.badge-approved {
+    background-color: rgba(42, 107, 124, 0.12);
+    color: var(--badge-approved);
+}
+
+.badge-reserved {
+    background-color: rgba(168, 90, 50, 0.12);
+    color: var(--badge-reserved);
+}
+
+.badge-completed {
+    background-color: rgba(104, 58, 70, 0.12);
+    color: var(--badge-completed);
+}
+
+.badge-rejected {
+    background-color: rgba(201, 74, 74, 0.12);
+    color: var(--badge-rejected);
+}
+
+/* Utilities */
+.dir-ltr {
+    direction: ltr !important;
+    display: inline-block;
 }
