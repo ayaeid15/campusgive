@@ -81,3 +81,95 @@ main {
     direction: ltr !important;
     display: inline-block;
 }
+
+/* خلفية مريحة للعين */
+body {
+    background-color: #FAF7F2 !important;
+}
+
+/* الكروت ببوردر دافئ وهادئ */
+.card {
+    border: 1px solid #EFEAE1 !important;
+    background-color: #FFFFFF;
+    transition: all 0.25s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(107, 45, 92, 0.06) !important;
+}
+
+/* شارة القسم: بني دافئ ناعم */
+.badge-category {
+    background-color: #F4EFEA !important;
+    color: #6B5B52 !important;
+    font-weight: 600;
+}
+
+/* شارات الحالة: موحدة وناعمة متناسقة مع البالتة */
+.badge-status {
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+/* متاح: تيل هادئ */
+.badge-approved {
+    background-color: #EBF4F5;
+    color: #2A6B7C;
+}
+
+/* محجوز: كافيه دافئ */
+.badge-reserved {
+    background-color: #F8ECE3;
+    color: #8C533E;
+}
+
+/* مكتمل: رمادي بورغندي ناعم */
+.badge-completed {
+    background-color: #F2EBF0;
+    color: #6B2D5C;
+}
+
+/* أزرار التفاصيل متناسقة مع الهوية */
+.btn-campus-outline {
+    border: 1px solid #2A6B7C !important;
+    color: #2A6B7C !important;
+    background-color: transparent;
+}
+
+.btn-campus-outline:hover {
+    background-color: #2A6B7C !important;
+    color: #FFFFFF !important;
+}
+
+/* تنسيقات هيكلية ومحاذاة الكروت */
+.card-body {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.card-text {
+    font-size: 0.88rem !important;
+    color: #6c757d !important;
+    margin-bottom: 0 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    height: 2.7rem !important;
+}
+
+.flex-spacer {
+    flex-grow: 1;
+}
+
+.card-footer-custom {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-top: 1px solid #EFEAE1 !important;
+    margin-top: 1rem !important;
+    padding-top: 0.8rem !important;
+}
