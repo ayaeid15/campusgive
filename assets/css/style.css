@@ -31,6 +31,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    padding-top: 80px !important;
 }
 
 main {
@@ -87,6 +88,7 @@ main {
     margin-bottom: 0 !important;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
     height: 2.7rem !important;
@@ -152,13 +154,53 @@ main {
     display: inline-block;
 }
 
-/* حل مشكلة تداخل الناف بار المثبت مع محتوى الصفحة */
+/* تأثير البلور الحقيقي عند السكرول للمحتوى تحت الناف بار */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.65) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* مسافة أمان حتى لا يغطي الناف بار العائم بداية الهيرو سكشن */
 body {
     padding-top: 100px !important;
 }
 
-/* ضبط انسيابية العرض على الشاشات المختلفة */
-main.container {
-    position: relative;
-    z-index: 1;
+
+
+/* تنسيق روابط الناف بار المخصصة */
+.navbar-nav .custom-nav-link {
+    color: var(--text-dark, #140E1C) !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    position: relative !important;
+    padding: 0.5rem 0.8rem !important;
+    transition: color 0.3s ease !important;
+}
+
+/* خط التأثير السفلي */
+.navbar-nav .custom-nav-link::after {
+    content: '' !important;
+    position: absolute !important;
+    width: 0 !important;
+    height: 2.5px !important;
+    bottom: 2px !important;
+    right: 50% !important;
+    background-color: var(--secondary-color, #A1525F) !important;
+    transition: all 0.3s ease !important;
+    transform: translateX(50%) !important;
+    border-radius: 4px !important;
+}
+
+/* حالة الـ Hover وحالة الصفحة النشطة Active */
+.navbar-nav .custom-nav-link:hover,
+.navbar-nav .custom-nav-link.active {
+    color: var(--secondary-color, #A1525F) !important;
+}
+
+.navbar-nav .custom-nav-link:hover::after,
+.navbar-nav .custom-nav-link.active::after {
+    width: 75% !important;
 }

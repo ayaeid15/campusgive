@@ -1,71 +1,87 @@
-<nav class="navbar navbar-expand-lg fixed-top my-3 mx-auto shadow-sm rounded-pill custom-glass-nav" 
-     style="width: 90%; max-width: 1200px; background: rgba(253, 251, 247, 0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(220, 200, 205, 0.6); z-index: 1030;">
-    <div class="container-fluid px-4 d-flex align-items-center justify-content-between">
         
-        <!-- اللوجو -->
-        <a class="navbar-brand fw-bold fs-4 m-0" href="../index.php" style="color: var(--primary-color, #683A46);">
-            Campus<span style="color: var(--accent-color, #C5757C);">Give</span> 🎓
+ <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$page = $_SERVER['REQUEST_URI'];
+?>
+    <div class="container">
+<div class="container fixed-top pt-3" style="z-index: 1030;">
+    <nav class="navbar navbar-expand-lg px-4 shadow-sm" 
+         style="background: rgba(255, 255, 255, 0.8) !important; 
+                -webkit-backdrop-filter: blur(16px) saturate(180%); 
+                backdrop-filter: blur(16px) saturate(180%); 
+                border: 1px solid rgba(200, 150, 62, 0.15)); 
+                border-radius: 50px !important; 
+                padding-top: 14px !important; 
+                padding-bottom: 14px !important;">
+
+    <div class="container-fluid p-0">
+        <!-- Brand / Logo -->
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/campusgive/index.php" style="color: var(--primary-color);">
+            <i class="fa-solid fa-graduation-cap fs-4"></i>
+            <span>Campus<span style="color: var(--accent-color, #c8963e);">Give</span></span>
         </a>
 
-        <!-- القائمة في المنتصف -->
-        <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
-            <ul class="navbar-nav mb-0 gap-lg-3 flex-row align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link custom-nav-link px-3" href="../index.php">الرئيسية</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link custom-nav-link px-3" href="../donations/browse.php">تصفح التبرعات</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link custom-nav-link px-3" href="../donations/add.php">إضافة تبرع</a>
-                </li>
-            </ul>
-        </div>
+        <!-- Toggler Button for Mobile -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <!-- أزرار الدخول/الحساب -->
-        <div class="d-flex align-items-center gap-2">
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <span class="fw-semibold small d-none d-sm-inline" style="color: var(--text-dark, #140E1C);">
-                    مرحباً، <?php echo htmlspecialchars($_SESSION['user_name']); ?>
-                </span>
-                <a href="../auth/logout.php" class="btn btn-sm px-3 rounded-pill fw-semibold" style="border: 1px solid #683A46; color: #683A46;">خروج</a>
-            <?php else: ?>
-                <a href="../auth/login.php" class="btn btn-sm px-3 rounded-pill fw-semibold" style="color: #140E1C; border: 1px solid #E6D5CC;">دخول</a>
-                <a href="../auth/register.php" class="btn btn-sm px-3 rounded-pill fw-semibold text-white shadow-sm" style="background-color: #683A46;">حساب جديد</a>
-            <?php endif; ?>
-        </div>
+        <!-- Navbar Links -->
 
+<div class="collapse navbar-collapse" id="navbarContent">
+    
+    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-2 text-center">
+        <li class="nav-item">
+            <a class="nav-link custom-nav-link <?php echo ($page == 'index.php') ? 'active' : ''; ?>" 
+           href="/campusgive/index.php">
+            <i class="fa-solid fa-house me-1"></i> الرئيسية
+          </a>
+       <li class="nav-item">
+           <a class="nav-link custom-nav-link <?php echo ($page == 'browse.php') ? 'active' : ''; ?>" 
+              href="/campusgive/donations/browse.php">
+              <i class="fa-solid fa-boxes-stacked me-1"></i> تصفح التبرعات
+           </a>
+       </li>
+    <li class="nav-item">
+        <a class="nav-link custom-nav-link <?php echo ($page == 'add.php') ? 'active' : ''; ?>" 
+           href="/campusgive/donations/add.php">
+            <i class="fa-solid fa-circle-plus me-1"></i> إضافة تبرع
+        </a>
+    </li>
+       
+    </ul>
+            <!-- User Auth Links -->
+            <div class="d-flex align-items-center justify-content-center gap-2 mt-3 mt-lg-0">
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="/campusgive/profile/index.php" class="btn btn-campus-outline btn-sm px-3 rounded-pill">
+                        <i class="fa-regular fa-user me-1"></i> حسابي
+                    </a>
+                    <a href="/campusgive/auth/logout.php" class="btn btn-outline-danger btn-sm px-3 rounded-pill">
+                        <i class="fa-solid fa-right-from-bracket me-1"></i> خروج
+                    </a>
+                <?php else: ?>
+                    <a href="/campusgive/auth/login.php" class="btn btn-campus-outline btn-sm px-3 rounded-pill">
+                        <i class="fa-solid fa-right-to-bracket me-1"></i> دخول
+                    </a>
+                    <a href="/campusgive/auth/register.php" class="btn btn-campus-primary btn-sm px-3 rounded-pill">
+                        <i class="fa-solid fa-user-plus me-1"></i> حساب جديد
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
 </nav>
+ </div>
 
 <style>
-.custom-nav-link {
-    color: var(--text-dark, #140E1C) !important;
-    font-weight: 600;
-    font-size: 0.95rem;
-    position: relative;
-    padding: 0.5rem 0.8rem !important;
-    transition: color 0.3s ease;
-}
 
-.custom-nav-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2.5px;
-    bottom: 2px;
-    right: 50%;
-    background-color: var(--secondary-color, #A1525F);
-    transition: all 0.3s ease;
-    transform: translateX(50%);
-    border-radius: 4px;
-}
-
-.custom-nav-link:hover {
-    color: var(--secondary-color, #A1525F) !important;
-}
-
-.custom-nav-link:hover::after {
-    width: 75%;
-}
+body {
+    padding-top: 100px;
+                }
+                /* تكبير ارتفاع الناف بار البيضاوي بأسلوب أنيق */
+.navbar {
+    min-height: 65px !important;
+} 
 </style>
