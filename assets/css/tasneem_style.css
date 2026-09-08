@@ -1,0 +1,35 @@
+/* ==========================================
+   Project Color Variables (CampusGive Palette)
+   استخدمي المتغيرات دي في تصميم صفحاتك
+   ========================================== */
+
+:root {
+    /* Main Palette - الهوية الأساسية */
+    --primary-color: #683A46;
+    /* Deep Muted Plum */
+    --secondary-color: #A1525F;
+    /* Rose Mauve */
+    --accent-color: #C5757C;
+    /* Soft Dusty Rose */
+    --bg-creamy: #FAF6F3;
+    /* Warm Creamy Background */
+    --card-bg: #FDFBF7;
+    /* Creamy Glass White */
+    --text-dark: #140E1C;
+    /* Dark Espresso */
+    --text-muted: #6C5F63;
+    /* Warm Muted Gray */
+
+    /* Status Badges - شارات الحالة */
+    --badge-pending: #D9822B;
+    --badge-approved: #2A6B7C;
+    --badge-reserved: #A85A32;
+    --badge-completed: #683A46;
+    --badge-rejected: #C94A4A;
+}
+
+/* أمثلة سريعة لكيفية الاستخدام:
+   background-color: var(--primary-color);
+   color: var(--text-dark);
+   border: 1px solid var(--accent-color);
+*/
