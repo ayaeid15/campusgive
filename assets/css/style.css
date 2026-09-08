@@ -204,3 +204,16 @@ body {
 .navbar-nav .custom-nav-link.active::after {
     width: 75% !important;
 }
+
+/* تأثير Glassmorphism لكروت الصفحة الرئيسية */
+.glass-card {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.glass-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+}

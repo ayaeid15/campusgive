@@ -1,8 +1,8 @@
-<?php 
+<?php
 session_start();
 include '../includes/db.php';
-include '../includes/header.php'; 
-include '../includes/navbar.php'; 
+include '../includes/header.php';
+include '../includes/navbar.php';
 
 $query = "SELECT donations.*, users.fullname FROM donations 
           JOIN users ON donations.user_id = users.id 
@@ -33,8 +33,8 @@ $result = mysqli_query($conn, $query);
                                 <span class="badge badge-category px-3 py-2 rounded-pill">
                                     <?php echo htmlspecialchars($row['category']); ?>
                                 </span>
-                                
-                                <?php 
+
+                                <?php
                                 $status = $row['status'];
                                 $status_text = [
                                     'approved' => 'متاح',
@@ -52,18 +52,20 @@ $result = mysqli_query($conn, $query);
                                 </span>
                             </div>
 
-                            <h5 class="card-title fw-bold text-dark mb-1 text-truncate"><?php echo htmlspecialchars($row['title']); ?></h5>
+                            <h5 class="card-title fw-bold text-dark mb-1 text-truncate">
+                                <?php echo htmlspecialchars($row['title']); ?></h5>
                             <p class="card-text flex-grow-1">
                                 <?php echo htmlspecialchars($row['description']); ?>
                             </p>
-                            
+
                             <div class="flex-spacer"></div>
 
                             <div class="card-footer-custom">
                                 <span class="text-muted small fw-medium text-truncate" style="max-width: 150px;">
                                     <?php echo htmlspecialchars($row['fullname']); ?>
                                 </span>
-                                <a href="details.php?id=<?php echo $row['id']; ?>" class="btn btn-campus-outline btn-sm px-3 rounded-2 fw-semibold">التفاصيل</a>
+                                <a href="details.php?id=<?php echo $row['id']; ?>"
+                                    class="btn btn-campus-outline btn-sm px-3 rounded-2 fw-semibold">التفاصيل</a>
                             </div>
                         </div>
                     </div>
@@ -77,9 +79,8 @@ $result = mysqli_query($conn, $query);
     </div>
 </main>
 <?php if (isset($_SESSION['welcome_message'])): ?>
-<!-- Custom Interactive Glassmorphism Modal -->
-<div id="welcomeModalOverlay" 
-     style="position: fixed; 
+    <!-- Custom Interactive Glassmorphism Modal -->
+    <div id="welcomeModalOverlay" style="position: fixed; 
             top: 0; left: 0; 
             width: 100vw; height: 100vh; 
             background: rgba(30, 20, 25, 0.55); 
@@ -91,19 +92,15 @@ $result = mysqli_query($conn, $query);
             justify-content: center; 
             padding: 15px;">
 
-    <div class="card border-0 shadow-lg rounded-5 text-center p-4 p-md-5 position-relative overflow-hidden" 
-         style="background: rgba(253, 251, 247, 0.95); 
+        <div class="card border-0 shadow-lg rounded-5 text-center p-4 p-md-5 position-relative overflow-hidden" style="background: rgba(253, 251, 247, 0.95); 
                 backdrop-filter: blur(25px); 
                 -webkit-backdrop-filter: blur(25px); 
                 border: 1px solid rgba(255, 255, 255, 0.8) !important; 
                 max-width: 440px; 
                 width: 100%;">
-        
-        <!-- زر الإغلاق ✕ -->
-        <button type="button" 
-                onclick="closeWelcomeModal()" 
-                aria-label="Close"
-                style="position: absolute; 
+
+            <!-- زر الإغلاق ✕ -->
+            <button type="button" onclick="closeWelcomeModal()" aria-label="Close" style="position: absolute; 
                        top: 15px; 
                        right: 20px; 
                        background: none; 
@@ -114,55 +111,52 @@ $result = mysqli_query($conn, $query);
                        line-height: 1; 
                        z-index: 10;
                        padding: 5px;">
-            ✕
-        </button>
+                ✕
+            </button>
 
-        <!-- الأيقونة العلوية -->
-        <div class="mb-3 d-flex justify-content-center">
-            <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm" 
-                 style="width: 65px; height: 65px; background-color: #F5EBE6; border: 1px solid #E6D5CC;">
-                <span class="fs-2">🎓</span>
+            <!-- الأيقونة العلوية -->
+            <div class="mb-3 d-flex justify-content-center">
+                <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                    style="width: 65px; height: 65px; background-color: #F5EBE6; border: 1px solid #E6D5CC;">
+                    <span class="fs-2">🎓</span>
+                </div>
+            </div>
+
+            <!-- العنوان والرسالة -->
+            <h4 class="fw-bold mb-2" style="color: #8C2B4E;">تم إنشاء الحساب بنجاح!</h4>
+            <p class="mb-4 small text-muted" style="line-height: 1.7;">
+                أهلاً بك يا <strong style="color: #4A3E3D;"><?php echo htmlspecialchars($_SESSION['user_name']); ?></strong>
+                في منصة CampusGive. سعداء بوجودك معنا لتسهيل الرحلة الدراسية ومشاركة التبرعات مع زملائك.
+            </p>
+
+            <!-- الأزرار التفاعلية -->
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-campus-primary py-2.5 px-4 rounded-3 fw-semibold"
+                    onclick="closeWelcomeModal()" style="cursor: pointer;">
+                    تصفح التبرعات المتاحة 📚
+                </button>
+                <a href="add.php" class="btn btn-campus-outline py-2.5 px-4 rounded-3 fw-semibold" style="cursor: pointer;">
+                    إضافة أول تبرع +
+                </a>
             </div>
         </div>
-
-        <!-- العنوان والرسالة -->
-        <h4 class="fw-bold mb-2" style="color: #8C2B4E;">تم إنشاء الحساب بنجاح!</h4>
-        <p class="mb-4 small text-muted" style="line-height: 1.7;">
-            أهلاً بك يا <strong style="color: #4A3E3D;"><?php echo htmlspecialchars($_SESSION['user_name']); ?></strong> في منصة CampusGive. سعداء بوجودك معنا لتسهيل الرحلة الدراسية ومشاركة التبرعات مع زملائك.
-        </p>
-
-        <!-- الأزرار التفاعلية -->
-        <div class="d-grid gap-2">
-            <button type="button" 
-                    class="btn btn-campus-primary py-2.5 px-4 rounded-3 fw-semibold" 
-                    onclick="closeWelcomeModal()"
-                    style="cursor: pointer;">
-                تصفح التبرعات المتاحة 📚
-            </button>
-            <a href="add.php" 
-               class="btn btn-campus-outline py-2.5 px-4 rounded-3 fw-semibold"
-               style="cursor: pointer;">
-                إضافة أول تبرع +
-            </a>
-        </div>
     </div>
-</div>
 
-<script>
-function closeWelcomeModal() {
-    const modal = document.getElementById('welcomeModalOverlay');
-    if (modal) {
-        modal.style.opacity = '0';
-        modal.style.transition = 'opacity 0.3s ease';
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 300);
-    }
-}
-</script>
-<?php 
-unset($_SESSION['welcome_message']); 
-endif; 
+    <script>
+        function closeWelcomeModal() {
+            const modal = document.getElementById('welcomeModalOverlay');
+            if (modal) {
+                modal.style.opacity = '0';
+                modal.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+            }
+        }
+    </script>
+    <?php
+    unset($_SESSION['welcome_message']);
+endif;
 ?>
 
 
