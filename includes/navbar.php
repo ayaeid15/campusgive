@@ -39,6 +39,13 @@ $page = $_SERVER['REQUEST_URI'];
                                 href="/campusgive/index.php">
                                 <i class="fa-solid fa-house me-1"></i> الرئيسية
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link custom-nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'about.php') ? 'active' : ''; ?>"
+                                href="/campusgive/about.php">
+                                <i class="fa-solid fa-circle-info me-1"></i> عن المنصة
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link custom-nav-link <?php echo ($page == 'browse.php') ? 'active' : ''; ?>"
                                 href="/campusgive/donations/browse.php">

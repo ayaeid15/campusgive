@@ -1,57 +1,44 @@
-</main>
-
-<footer class="mt-5 py-4 border-top border-white"
-    style="background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);">
+<footer class="mt-auto py-5"
+    style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-top: 1px solid rgba(220, 200, 205, 0.5);">
     <div class="container">
-        <div class="row g-4 mb-4">
-            <!-- الشعار والوصف -->
-            <div class="col-md-5">
-                <a class="navbar-brand fw-bold fs-4 d-flex align-items-center mb-2" href="/campusgive/index.php"
-                    style="color: var(--primary-color);">
-                    CampusGive <i class="fa-solid fa-graduation-cap ms-2"></i>
-                </a>
-                <p class="text-muted small mb-0 ms-0" style="max-width: 320px;">
+        <div class="row g-4 justify-content-between">
+
+            <!-- العمود الأول: الشعار والوصف -->
+            <div class="col-lg-5 col-md-6">
+                <div class="d-flex align-items-center mb-2">
+                    <i class="fa-solid fa-graduation-cap fs-3 me-2" style="color: var(--primary-color, #683A46);"></i>
+                    <span class="fw-bold fs-4" style="color: var(--primary-color, #683A46);">CampusGive</span>
+                </div>
+                <p class="text-muted small leading-relaxed mb-0" style="max-width: 380px;">
                     منصة التكامل والتكافل الطلابية المخصصة لتبادل ومشاركة الكتب والأدوات الدراسية داخل الحرم الجامعي بكل
                     سهولة وأمان.
                 </p>
             </div>
 
-            <!-- روابط سريعة -->
-            <div class="col-6 col-md-3">
-                <h6 class="fw-bold mb-3" style="color: var(--primary-color);">روابط سريعة</h6>
-                <ul class="list-unstyled small mb-0">
-                    <li class="mb-2"><a href="/campusgive/index.php"
-                            class="text-decoration-none text-muted">الرئيسية</a></li>
-                    <li class="mb-2"><a href="/campusgive/donations/browse.php"
-                            class="text-decoration-none text-muted">تصفح التبرعات</a></li>
-                    <li class="mb-2"><a href="/campusgive/donations/add.php"
-                            class="text-decoration-none text-muted">إضافة تبرع</a></li>
+            <!-- العمود الثاني: روابط سريعة (رأسية) -->
+            <div class="col-lg-3 col-md-6">
+                <h6 class="fw-bold mb-3" style="color: var(--primary-color, #683A46);">روابط سريعة</h6>
+                <ul class="list-unstyled p-0 m-0 d-flex flex-column gap-2">
+                    <li>
+                        <a href="/campusgive/index.php" class="footer-link-classic">الرئيسية</a>
+                    </li>
+                    <li>
+                        <a href="/campusgive/about.php" class="footer-link-classic">عن المنصة</a>
+                    </li>
+                    <li>
+                        <a href="/campusgive/donations/browse.php" class="footer-link-classic">تصفح التبرعات</a>
+                    </li>
                 </ul>
             </div>
 
-            <!-- التصنيفات -->
-            <div class="col-6 col-md-4">
-                <h6 class="fw-bold mb-3" style="color: var(--primary-color);">الأقسام</h6>
-                <div class="d-flex flex-wrap gap-2">
-                    <a href="/campusgive/donations/browse.php?category=books"
-                        class="badge bg-white text-dark border text-decoration-none px-3 py-2">كتب ومراجع</a>
-                    <a href="/campusgive/donations/browse.php?category=tools"
-                        class="badge bg-white text-dark border text-decoration-none px-3 py-2">أدوات هندسية</a>
-                    <a href="/campusgive/donations/browse.php?category=tech"
-                        class="badge bg-white text-dark border text-decoration-none px-3 py-2">إلكترونيات</a>
-                </div>
-            </div>
         </div>
 
-        <div
-            class="pt-3 border-top d-flex flex-column flex-md-row justify-content-between align-items-center small text-muted">
-            <p class="mb-2 mb-md-0">جميع الحقوق محفوظة &copy;
-                <?php echo date('Y'); ?> CampusGive
-            </p>
-            <div>
-                <span class="me-3"><i class="fa-solid fa-shield-halved me-1"></i> مجاني 100%</span>
-                <span><i class="fa-solid fa-building-columns me-1"></i> دعم طلابي</span>
-            </div>
+        <hr class="my-4" style="border-color: rgba(104, 58, 70, 0.15);">
+
+        <!-- شريط حقوق الملكية -->
+        <div class="text-center text-muted small">
+            جميع الحقوق محفوظة &copy;
+            <?php echo date('Y'); ?> CampusGive
         </div>
     </div>
 </footer>
