@@ -1,76 +1,97 @@
-<?php 
+<?php
+require_once '../includes/db.php';
 session_start();
-include '../includes/db.php';
-include '../includes/header.php'; 
-include '../includes/navbar.php'; 
 
-$message = "";
+$error = '';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email    = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    $query  = "SELECT * FROM users WHERE email='$email'";
-    $result = mysqli_query($conn, $query);
+    if (empty($email) || empty($password)) {
+        $error = 'يرجى إدخال البريد الإلكتروني وكلمة المرور';
+    } else {
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        $user = mysqli_fetch_assoc($result);
-        
-        // التحقق من كلمة المرور المتشفرة
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id']   = $user['id'];
-            $_SESSION['user_name'] = $user['fullname'];
-            $_SESSION['user_role'] = $user['role'];
-
-            header("Location: /campusgive/index.php");
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['full_name'];
+            header('Location: /campusgive/index.php');
             exit();
         } else {
-            $message = "كلمة المرور غير صحيحة!";
+            $error = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
         }
-    } else {
-        $message = "البريد الإلكتروني غير مسجل!";
     }
 }
 ?>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
-<main class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card border-0 shadow-sm rounded-4">
-                <div class="card-body p-4 p-md-5">
-                    <div class="text-center mb-4">
-                        <h3 class="fw-bold text-dark mb-1">تسجيل الدخول</h3>
-                        <p class="text-muted small">أدخل بياناتك للمتابعة في منصة CampusGive</p>
-                    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - CampusGive</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
 
-                    <?php if (!empty($message)): ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <?php echo $message; ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    <?php endif; ?>
+<body class="auth-page-body">
 
-                    <form action="login.php" method="POST">
-                        <div class="mb-3">
-                            <label for="email" class="form-label fw-semibold">البريد الإلكتروني</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="example@univ.edu.eg" required>
-                        </div>
+    <div class="auth-container">
+        <!-- كارت تسجيل الدخول الزجاجي -->
+        <div class="auth-card p-4 p-sm-5 rounded-5 shadow-lg border border-white">
 
-                        <div class="mb-4">
-                            <label for="password" class="form-label fw-semibold">كلمة المرور</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
-                        </div>
+            <!-- العودة للرئيسية والشعار -->
+            <div class="text-center mb-4">
+                <a href="/campusgive/index.php" class="text-decoration-none d-inline-block mb-2">
+                    <span class="fw-bold fs-3" style="color: var(--primary-color);">CampusGive <i
+                            class="fa-solid fa-graduation-cap"></i></span>
+                </a>
+                <h5 class="fw-bold text-dark mb-1">تسجيل الدخول</h5>
+                <p class="text-muted small">أدخل بياناتك للمتابعة في منصة CampusGive</p>
+            </div>
 
-                        <button type="submit" class="btn btn-campus-primary w-100 py-2 fw-semibold rounded-3 mb-3">دخول</button>
-                    </form>
-
-                    <div class="text-center mt-3">
-                        <p class="text-muted small mb-0">ليس لديك حساب؟ <a href="register.php" class="text-decoration-none fw-semibold" style="color: var(--primary-color);">حساب جديد</a></p>
-                    </div>
+            <?php if ($error): ?>
+                <div class="alert alert-danger py-2 small rounded-3 text-center">
+                    <?php echo htmlspecialchars($error); ?>
                 </div>
+            <?php endif; ?>
+
+            <form action="" method="POST">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-secondary">البريد الإلكتروني</label>
+                    <input type="email" name="email" class="form-control rounded-pill px-3"
+                        placeholder="example@univ.edu.eg" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-secondary">كلمة المرور</label>
+                    <input type="password" name="password" class="form-control rounded-pill px-3" placeholder="••••••••"
+                        required>
+                </div>
+
+                <button type="submit" class="btn btn-campus-primary w-100 rounded-pill py-2 fw-bold mb-3">
+                    دخول
+                </button>
+            </form>
+
+            <div class="text-center">
+                <span class="text-muted small">ليس لديك حساب؟</span>
+                <a href="/campusgive/auth/register.php" class="small fw-bold text-decoration-none ms-1"
+                    style="color: var(--primary-color);">حساب جديد</a>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/campusgive/index.php" class="text-muted small text-decoration-none">
+                    <i class="fa-solid fa-arrow-right me-1"></i> العودة للصفحة الرئيسية
+                </a>
             </div>
         </div>
     </div>
-</main>
 
-<?php include '../includes/footer.php'; ?>
+</body>
+
+</html>

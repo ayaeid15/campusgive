@@ -212,5 +212,119 @@ $result = mysqli_query($conn, $query);
         <?php endif; ?>
     </div>
 </section>
+<!-- Categories Section -->
+<section class="py-5">
+    <div class="container text-center">
+        <h3 class="fw-bold mb-2" style="color: var(--primary-color, #4a154b);">الأقسام الرئيسية</h3>
+        <p class="text-muted small mb-4">اختر القسم الذي تبحث فيه لتسهيل الوصول للأدوات</p>
+
+        <div class="row g-3 justify-content-center">
+            <div class="col-6 col-md-3">
+                <a href="/campusgive/donations/browse.php?category=books"
+                    class="text-decoration-none text-dark d-block">
+                    <div class="p-4 rounded-4 bg-white shadow-sm border h-100 category-card">
+                        <i class="fa-solid fa-book-open fs-2 mb-3 text-primary"></i>
+                        <h6 class="fw-bold mb-0">كتب ومراجع</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="/campusgive/donations/browse.php?category=tools"
+                    class="text-decoration-none text-dark d-block">
+                    <div class="p-4 rounded-4 bg-white shadow-sm border h-100 category-card">
+                        <i class="fa-solid fa-compass-drafting fs-2 mb-3 text-primary"></i>
+                        <h6 class="fw-bold mb-0">أدوات هندسية</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="/campusgive/donations/browse.php?category=tech" class="text-decoration-none text-dark d-block">
+                    <div class="p-4 rounded-4 bg-white shadow-sm border h-100 category-card">
+                        <i class="fa-solid fa-calculator fs-2 mb-3 text-primary"></i>
+                        <h6 class="fw-bold mb-0">حاسبات وإلكترونيات</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="/campusgive/donations/browse.php?category=general"
+                    class="text-decoration-none text-dark d-block">
+                    <div class="p-4 rounded-4 bg-white shadow-sm border h-100 category-card">
+                        <i class="fa-solid fa-folder-open fs-2 mb-3 text-primary"></i>
+                        <h6 class="fw-bold mb-0">مستلزمات عامة</h6>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Accordion Section -->
+<section class="py-5 bg-white bg-opacity-50 rounded-5 my-4 shadow-sm border border-white">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold mb-2" style="color: var(--primary-color, #4a154b);">الأسئلة الشائعة</h3>
+            <p class="text-muted small">إليك إجابات لأكثر الأسئلة تداولاً بين الطلاب</p>
+        </div>
+
+        <div class="accordion accordion-flush max-w-750 mx-auto" id="faqAccordion" style="max-width: 750px;">
+            <div class="accordion-item bg-transparent border-0 mb-3 shadow-sm rounded-4 overflow-hidden border">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold py-3" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq1">
+                        هل المنصة مجانية بالكامل؟
+                    </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body text-muted small bg-white">
+                        نعم، المنصة مجانية 100% ومخصصة لدعم التكافل والتبادل الطلابي داخل الكلية بدون أي مقابل مادي.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item bg-transparent border-0 mb-3 shadow-sm rounded-4 overflow-hidden border">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold py-3" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq2">
+                        كيف يتم تسليم الكتب والأدوات بين الطلاب؟
+                    </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body text-muted small bg-white">
+                        بعد طلب الأداة، يمكنك التواصل مباشرة مع صاحب التبرع والتنسيق معه لمقابلته داخل الحرم الجامعي في
+                        المكان والموعد المناسب لكما.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item bg-transparent border-0 mb-3 shadow-sm rounded-4 overflow-hidden border">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold py-3" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq3">
+                        كيف يمكنني إضافة أداة أو كتاب للتبرع؟
+                    </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body text-muted small bg-white">
+                        قم بتسجيل الدخول إلى حسابك، ثم اضغط على زر "إضافة تبرع" واملأ تفاصيل الأداة والصورة لتكون متاحة
+                        فوراً لزملائك.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call To Action (CTA) Banner -->
+<section class="py-5 text-center text-white rounded-5 my-4 shadow"
+    style="background: linear-gradient(135deg, var(--primary-color, #4a154b), #2d0b2e);">
+    <div class="container py-3">
+        <h3 class="fw-bold mb-3">هل لديك أدوات أو كتب لم تعد بحاجتها؟</h3>
+        <p class="mb-4 opacity-75">شاركها مع زملائك في الجامعة وكن سبباً في دعم رحلتهم الأكاديمية.</p>
+        <a href="/campusgive/donations/add.php"
+            class="btn btn-light rounded-pill px-4 py-2 fw-bold text-dark shadow-sm">
+            <i class="fa-solid fa-plus-circle me-1"></i> أضف تبرعك الآن
+        </a>
+    </div>
+</section>
 
 <?php include 'includes/footer.php'; ?>

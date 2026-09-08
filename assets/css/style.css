@@ -217,3 +217,131 @@ body {
     transform: translateY(-4px) !important;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
 }
+
+/* تأثير كروت الأقسام عند الوقوف الماوس */
+.category-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.category-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ==========================================
+   ربط عناصر الصفحة الرئيسية بمتغيرات الباليت
+   ========================================== */
+
+/* 1. ألوان العناوين والأيقونات في الكروت والأقسام */
+.category-card i,
+.glass-card i {
+    color: var(--secondary-color) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.category-card:hover i {
+    transform: scale(1.12) !important;
+}
+
+/* 2. تخصيص ألوان الأكورديون (الأسئلة الشائعة) لتلائم الباليت */
+.accordion-button {
+    color: var(--primary-color) !important;
+    font-weight: 600 !important;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: rgba(161, 82, 95, 0.12) !important;
+    color: var(--primary-color) !important;
+    box-shadow: none !important;
+}
+
+.accordion-button:focus {
+    box-shadow: none !important;
+    border-color: var(--accent-color) !important;
+}
+
+.accordion-button::after {
+    /* تحويل لون سهم الأكورديون للون النبيتي الداكن */
+    filter: invert(24%) sepia(28%) saturate(1480%) hue-rotate(303deg) brightness(92%) contrast(88%) !important;
+}
+
+/* 3. كروت الأقسام والكروت الزجاجية */
+.category-card {
+    background: var(--card-bg) !important;
+    border: 1px solid rgba(220, 200, 205, 0.6) !important;
+}
+
+/* 4. تعديل نصوص الألوان الافتراضية للـ Bootstrap */
+.text-primary {
+    color: var(--secondary-color) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--primary-color) !important;
+}
+
+/* إصلاح التباين في الأسئلة والـ CTA */
+.accordion-button {
+    color: var(--primary-color) !important;
+    font-weight: 700 !important;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--primary-color) !important;
+}
+
+/* توضيح نصوص كارت CTA الداكن */
+section[style*="linear-gradient"] h3 {
+    color: #ffffff !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+}
+
+section[style*="linear-gradient"] p {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* ==========================================
+   Centered Blurred Auth Layout (Login & Register)
+   ========================================== */
+
+.auth-page-body {
+    padding-top: 0 !important;
+    min-height: 100vh !important;
+    background: radial-gradient(circle at 50% 50%, rgba(226, 179, 163, 0.4) 0%, var(--bg-creamy, #FAF6F3) 80%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 480px;
+    padding: 20px;
+}
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(25px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 20px 40px rgba(104, 58, 70, 0.12) !important;
+}
+
+.auth-card input.form-control {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(220, 200, 205, 0.8) !important;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+}
+
+.auth-card input.form-control:focus {
+    background: #fff !important;
+    border-color: var(--secondary-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(161, 82, 95, 0.15) !important;
+}

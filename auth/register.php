@@ -1,113 +1,125 @@
 <?php
+require_once '../includes/db.php';
 session_start();
-include '../includes/db.php';
-include '../includes/header.php';
-include '../includes/navbar.php';
 
-$message = "";
-$msg_type = "";
+$error = '';
+$success = '';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $fullname = mysqli_real_escape_string($conn, $_POST['fullname']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $full_name = trim($_POST['full_name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $confirm_password = $_POST['confirm_password'] ?? '';
 
-    if ($password !== $confirm_password) {
-        $message = "كلمات المرور غير متطابقة!";
-        $msg_type = "danger";
+    if (empty($full_name) || empty($email) || empty($password)) {
+        $error = 'يرجى إدخال جميع البيانات المطلوبة';
+    } elseif ($password !== $confirm_password) {
+        $error = 'كلمات المرور غير متطابقة';
     } else {
-        // التحقق من وجود البريد سابقاً
-        $check_email = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
-        if (mysqli_num_rows($check_email) > 0) {
-            $message = "البريد الإلكتروني مسجل بالفعل!";
-            $msg_type = "warning";
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        if ($stmt->fetch()) {
+            $error = 'البريد الإلكتروني مُسجل بالفعل';
         } else {
-            // تشفير كلمة المرور وحفظ المستخدم
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $query = "INSERT INTO users (fullname, email, phone, password) VALUES ('$fullname', '$email', '$phone', '$hashed_password')";
-
-            if (mysqli_query($conn, $query)) {
-                $new_user_id = mysqli_insert_id($conn);
-
-                $_SESSION['user_id'] = $new_user_id;
-                $_SESSION['user_name'] = $fullname;
-                $_SESSION['user_role'] = 'user';
-
-                $_SESSION['welcome_message'] = "أهلاً بك يا " . htmlspecialchars($fullname) . " في عائلة CampusGive! 🎓✨ يسعدنا انضمامك لتسهم في نشر الخير وتيسير الرحلة الدراسية على زملائك.";
-
-                header("Location: ../donations/browse.php");
+            $stmt = $pdo->prepare("INSERT INTO users (full_name, email, phone, password) VALUES (?, ?, ?, ?)");
+            if ($stmt->execute([$full_name, $email, $phone, $hashed_password])) {
+                $_SESSION['user_id'] = $pdo->lastInsertId();
+                $_SESSION['user_name'] = $full_name;
+                header('Location: /campusgive/index.php');
                 exit();
             } else {
-                $message = "حدث خطأ أثناء التسجيل: " . mysqli_error($conn);
-                $msg_type = "danger";
+                $error = 'حدث خطأ أثناء إنشاء الحساب';
             }
         }
     }
 }
 ?>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
-<main class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card border-0 shadow-sm rounded-4">
-                <div class="card-body p-4 p-md-5">
-                    <div class="text-center mb-4">
-                        <h3 class="fw-bold text-dark mb-1">إنشاء حساب جديد</h3>
-                        <p class="text-muted small">انضم إلى مجتمع CampusGive لتشارك وتستفيد من التبرعات الجامعية</p>
-                    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد - CampusGive</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
 
-                    <?php if (!empty($message)): ?>
-                        <div class="alert alert-<?php echo $msg_type; ?> alert-dismissible fade show" role="alert">
-                            <?php echo $message; ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    <?php endif; ?>
+<body class="auth-page-body">
 
-                    <form action="register.php" method="POST">
-                        <div class="mb-3">
-                            <label for="fullname" class="form-label fw-semibold">الاسم الكامل</label>
-                            <input type="text" class="form-control" id="fullname" name="fullname"
-                                placeholder="أدخل اسمك الثلاثي" required>
-                        </div>
+    <div class="auth-container">
+        <!-- كارت التسجيل الزجاجي -->
+        <div class="auth-card p-4 p-sm-5 rounded-5 shadow-lg border border-white">
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label fw-semibold">البريد الإلكتروني الجامعي</label>
-                            <input type="email" class="form-control" id="email" name="email"
-                                placeholder="example@univ.edu.eg" required>
-                        </div>
+            <!-- العودة للرئيسية والشعار -->
+            <div class="text-center mb-4">
+                <a href="/campusgive/index.php" class="text-decoration-none d-inline-block mb-2">
+                    <span class="fw-bold fs-3" style="color: var(--primary-color);">CampusGive <i
+                            class="fa-solid fa-graduation-cap"></i></span>
+                </a>
+                <h5 class="fw-bold text-dark mb-1">إنشاء حساب جديد</h5>
+                <p class="text-muted small">انضم لمنصة التكافل والتبادل الطلابي
+                    لتشارك وتستفيد من التبرعات الجامعية
+                </p>
+            </div>
 
-                        <div class="mb-3">
-                            <label for="phone" class="form-label fw-semibold">رقم الهاتف</label>
-                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="01xxxxxxxxx">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label fw-semibold">كلمة المرور</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                placeholder="••••••••" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="confirm_password" class="form-label fw-semibold">تأكيد كلمة المرور</label>
-                            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
-                                placeholder="••••••••" required>
-                        </div>
-
-                        <button type="submit" class="btn btn-campus-primary w-100 py-2 fw-semibold rounded-3 mb-3">إنشاء
-                            الحساب</button>
-                    </form>
-
-                    <div class="text-center mt-3">
-                        <p class="text-muted small mb-0">لديك حساب بالفعل؟ <a href="login.php"
-                                class="text-decoration-none fw-semibold" style="color: var(--primary-color);">تسجيل
-                                الدخول</a></p>
-                    </div>
+            <?php if ($error): ?>
+                <div class="alert alert-danger py-2 small rounded-3">
+                    <?php echo htmlspecialchars($error); ?>
                 </div>
+            <?php endif; ?>
+
+            <form action="" method="POST">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-secondary">الاسم بالكامل</label>
+                    <input type="text" name="full_name" class="form-control rounded-pill px-3" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-secondary">البريد الإلكتروني الجامعي</label>
+                    <input type="email" name="email" class="form-control rounded-pill px-3"
+                        placeholder="student@univ.edu.eg" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-secondary">رقم الهاتف (واتساب)</label>
+                    <input type="text" name="phone" class="form-control rounded-pill px-3" placeholder="01xxxxxxxxx">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-secondary">كلمة المرور</label>
+                    <input type="password" name="password" class="form-control rounded-pill px-3" placeholder="••••••••"
+                        required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-secondary">تأكيد كلمة المرور</label>
+                    <input type="password" name="confirm_password" class="form-control rounded-pill px-3"
+                        placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn btn-campus-primary w-100 rounded-pill py-2 fw-bold mb-3">
+                    إنشاء الحساب
+                </button>
+            </form>
+
+            <div class="text-center">
+                <span class="text-muted small">لديك حساب بالفعل؟</span>
+                <a href="/campusgive/auth/login.php" class="small fw-bold text-decoration-none ms-1"
+                    style="color: var(--primary-color);">تسجيل الدخول</a>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/campusgive/index.php" class="text-muted small text-decoration-none">
+                    <i class="fa-solid fa-arrow-right me-1"></i> العودة للصفحة الرئيسية
+                </a>
             </div>
         </div>
     </div>
-</main>
 
-<?php include '../includes/footer.php'; ?>
+</body>
+
+</html>
