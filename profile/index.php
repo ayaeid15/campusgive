@@ -174,8 +174,7 @@ $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
                             <p class="card-text text-muted small">راجع الطلبات المقدمة من الطلاب على العناصر التي تبرعت
                                 بها واقبلها أو ارفضها.</p>
                         </div>
-                        <a href="/campusgive/requests/my_requests.php"
-                            class="btn btn-campus-primary w-100 rounded-pill mt-3 py-2 fw-bold">مراجعة الطلبات</a>
+                        <a href="../requests/my_requests.php" class="btn ...">مراجعة الطلبات</a>
                     </div>
                 </div>
             </div>

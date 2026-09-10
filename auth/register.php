@@ -1,18 +1,30 @@
 <?php
-require_once '../includes/db.php';
 session_start();
+
+// بيانات الاتصال بقاعدة البيانات مباشرة
+$host = 'localhost';
+$dbname = 'campusgive_db';
+$username = 'root';
+$password = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("خطأ في الاتصال بقاعدة البيانات: " . $e->getMessage());
+}
 
 $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $full_name = trim($_POST['full_name'] ?? '');
+    $fullname = trim($_POST['fullname'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
 
-    if (empty($full_name) || empty($email) || empty($password)) {
+    if (empty($fullname) || empty($email) || empty($password)) {
         $error = 'يرجى إدخال جميع البيانات المطلوبة';
     } elseif ($password !== $confirm_password) {
         $error = 'كلمات المرور غير متطابقة';
@@ -23,10 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'البريد الإلكتروني مُسجل بالفعل';
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("INSERT INTO users (full_name, email, phone, password) VALUES (?, ?, ?, ?)");
-            if ($stmt->execute([$full_name, $email, $phone, $hashed_password])) {
+            $stmt = $pdo->prepare("INSERT INTO users (fullname, email, phone, password) VALUES (?, ?, ?, ?)");
+            if ($stmt->execute([$fullname, $email, $phone, $hashed_password])) {
                 $_SESSION['user_id'] = $pdo->lastInsertId();
-                $_SESSION['user_name'] = $full_name;
+                $_SESSION['user_name'] = $fullname;
                 header('Location: /campusgive/index.php');
                 exit();
             } else {
@@ -75,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form action="" method="POST">
                 <div class="mb-3">
                     <label class="form-label small fw-bold text-secondary">الاسم بالكامل</label>
-                    <input type="text" name="full_name" class="form-control rounded-pill px-3" required>
+                    <input type="text" name="fullname" class="form-control rounded-pill px-3" required>
                 </div>
 
                 <div class="mb-3">
@@ -121,5 +133,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
 </body>
-
-</html>

@@ -133,10 +133,17 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
                 <a href="add.php" class="btn btn-campus-primary px-4 py-2 rounded-pill fw-bold shadow-sm">
                     <i class="fa-solid fa-plus me-1"></i> إضافة تبرع جديد
                 </a>
-                <a href="/campusgive/profile/index.php"
-                    class="btn btn-campus-outline btn-sm px-3 rounded-pill d-flex align-items-center">
-                    <i class="fa-regular fa-user me-1"></i> حسابي
-                </a>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="../profile/index.php"
+                        class="btn btn-campus-outline btn-sm px-3 rounded-pill d-flex align-items-center">
+                        <i class="fa-regular fa-user me-1"></i> حسابي
+                    </a>
+                <?php else: ?>
+                    <a href="../auth/login.php"
+                        class="btn btn-campus-outline btn-sm px-3 rounded-pill d-flex align-items-center">
+                        <i class="fa-regular fa-right-to-bracket me-1"></i> تسجيل الدخول
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -190,18 +197,18 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
                             <?php endif; ?>
 
                             <!-- الصورة -->
-                            <?php if (!empty($imagePath)): ?>
-                                <img src="../<?= htmlspecialchars($imagePath) ?>" class="card-img-top"
-                                    style="height: 200px; object-fit: cover;">
+
+                            <!-- الصورة -->
+                            <?php if (!empty($item['image'])): ?>
+                                <img src="../assets/images/<?php echo htmlspecialchars($item['image']); ?>" class="card-img-top"
+                                    style="height: 200px; width: 100%; object-fit: contain; background-color: #F3ECE7;"
+                                    alt="<?php echo htmlspecialchars($item['title']); ?>">
                             <?php else: ?>
-                                <div class="card-img-wrapper">
-                                    <div class="text-center">
-                                        <i class="fa-solid fa-image fs-2 mb-1 opacity-50"></i>
-                                        <span class="d-block small">لا توجد صورة</span>
-                                    </div>
+                                <div class="card-img-wrapper text-center py-4 bg-light">
+                                    <i class="fa-solid fa-image fs-2 mb-1 opacity-50"></i>
+                                    <span class="d-block small text-muted">لا توجد صورة</span>
                                 </div>
                             <?php endif; ?>
-
                             <!-- المحتوى -->
                             <div class="card-body p-4 d-flex flex-column justify-content-between">
                                 <div>

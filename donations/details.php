@@ -25,6 +25,26 @@ if (!$donation) {
     header("Location: ../index.php");
     exit();
 }
+// معالجة إرسال الطلب
+$request_sent = false;
+$user_id = $_SESSION['user_id'] ?? 0;
+
+if ($user_id && $donation_id) {
+    // التأكد هل اليوزر طلب التبرع ده قبل كده ولا لا
+    $check_req = $conn->prepare("SELECT id FROM donation_requests WHERE donation_id = ? AND requester_id = ?");
+    $check_req->execute([$donation_id, $user_id]);
+    if ($check_req->fetch()) {
+        $request_sent = true;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_item']) && !$request_sent) {
+        $owner_id = $donation['user_id'] ?? 1;
+        $ins_req = $conn->prepare("INSERT INTO donation_requests (donation_id, requester_id) VALUES (?, ?)");
+        if ($ins_req->execute([$donation_id, $user_id])) {
+            $request_sent = true;
+        }
+    }
+}
 ?>
 
 <link rel="stylesheet" href="../assets/css/aya_style.css">
@@ -54,23 +74,27 @@ if (!$donation) {
                     </p>
                 </div>
 
-                <hr>
-
-                <h5 class="text-plum">الوصف التفصيلي:</h5>
-                <p class="description-text text-muted">
-                    <?php echo nl2br(htmlspecialchars($donation['description'])); ?>
-                </p>
-
                 <div class="mt-4">
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <button class="btn btn-plum" data-toggle="modal" data-target="#requestModal">طلب التبرع
-                            الآن</button>
+                        <form method="POST">
+                            <?php if ($request_sent): ?>
+                                <button type="button" class="btn btn-success rounded-pill px-4 py-2 w-100" disabled>
+                                    <i class="fa-solid fa-check-circle me-1"></i> تم إرسال الطلب بنجاح
+                                </button>
+                            <?php else: ?>
+                                <button type="submit" name="request_item" class="btn btn-plum rounded-pill px-4 py-2 w-100">
+                                    طلب التبرع الآن
+                                </button>
+                            <?php endif; ?>
+                        </form>
                     <?php else: ?>
-                        <a href="../auth/login.php" class="btn btn-outline-mauve">سجل دخول لطلب التبرع</a>
+                        <a href="../auth/login.php" class="btn btn-outline-mauve w-100 rounded-pill py-2">سجل دخولك لطلب
+                            التبرع</a>
                     <?php endif; ?>
 
-                    <!-- ربط زر العودة لصفحة قائمة التبرعات -->
-                    <a href="all_donations.php" class="btn btn-secondary mr-2">العودة للقائمة</a>
+                    <!-- زر العودة لقائمة التبرعات -->
+                    <a href="all_donations.php" class="btn btn-secondary mt-2 w-100 rounded-pill py-2">العودة
+                        للقائمة</a>
                 </div>
             </div>
 
