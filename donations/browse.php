@@ -4,11 +4,14 @@ include '../includes/db.php';
 include '../includes/header.php';
 include '../includes/navbar.php';
 
-$query = "SELECT donations.*, users.fullname FROM donations 
-          JOIN users ON donations.user_id = users.id 
-          WHERE donations.status IN ('approved', 'reserved', 'completed')
-          ORDER BY donations.created_at DESC";
-$result = mysqli_query($conn, $query);
+// استعلام جلب كل التبرعات من الداتابيز بدون تصفية للحالة
+$stmt = $conn->query("
+    SELECT donations.*, users.fullname 
+    FROM donations 
+    JOIN users ON donations.user_id = users.id 
+    ORDER BY donations.created_at DESC
+");
+$donations = $stmt->fetchAll();
 ?>
 
 <main class="container py-5">
@@ -24,8 +27,8 @@ $result = mysqli_query($conn, $query);
     </div>
 
     <div class="row g-4">
-        <?php if ($result && mysqli_num_rows($result) > 0): ?>
-            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+        <?php if (!empty($donations)): ?>
+            <?php foreach ($donations as $row): ?>
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 bg-white rounded-4 overflow-hidden border-0">
                         <div class="card-body p-4">
@@ -35,25 +38,28 @@ $result = mysqli_query($conn, $query);
                                 </span>
 
                                 <?php
-                                $status = $row['status'];
+                                $status = $row['status'] ?? 'approved';
                                 $status_text = [
                                     'approved' => 'متاح',
                                     'reserved' => 'محجوز',
-                                    'completed' => 'مكتمل'
+                                    'completed' => 'مكتمل',
+                                    'pending' => 'قيد المراجعة'
                                 ];
                                 $status_class = [
                                     'approved' => 'badge-approved',
                                     'reserved' => 'badge-reserved',
-                                    'completed' => 'badge-completed'
+                                    'completed' => 'badge-completed',
+                                    'pending' => 'badge-reserved'
                                 ];
                                 ?>
-                                <span class="badge-status <?php echo $status_class[$status]; ?>">
-                                    <?php echo $status_text[$status]; ?>
+                                <span class="badge-status <?php echo $status_class[$status] ?? 'badge-approved'; ?>">
+                                    <?php echo $status_text[$status] ?? 'متاح'; ?>
                                 </span>
                             </div>
 
                             <h5 class="card-title fw-bold text-dark mb-1 text-truncate">
-                                <?php echo htmlspecialchars($row['title']); ?></h5>
+                                <?php echo htmlspecialchars($row['title']); ?>
+                            </h5>
                             <p class="card-text flex-grow-1">
                                 <?php echo htmlspecialchars($row['description']); ?>
                             </p>
@@ -70,7 +76,7 @@ $result = mysqli_query($conn, $query);
                         </div>
                     </div>
                 </div>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         <?php else: ?>
             <div class="col-12 text-center py-5">
                 <p class="text-muted fs-5">لا توجد تبرعات معروضة حالياً.</p>
@@ -78,6 +84,7 @@ $result = mysqli_query($conn, $query);
         <?php endif; ?>
     </div>
 </main>
+
 <?php if (isset($_SESSION['welcome_message'])): ?>
     <!-- Custom Interactive Glassmorphism Modal -->
     <div id="welcomeModalOverlay" style="position: fixed; 
@@ -125,7 +132,9 @@ $result = mysqli_query($conn, $query);
             <!-- العنوان والرسالة -->
             <h4 class="fw-bold mb-2" style="color: #8C2B4E;">تم إنشاء الحساب بنجاح!</h4>
             <p class="mb-4 small text-muted" style="line-height: 1.7;">
-                أهلاً بك يا <strong style="color: #4A3E3D;"><?php echo htmlspecialchars($_SESSION['user_name']); ?></strong>
+                أهلاً بك يا <strong style="color: #4A3E3D;">
+                    <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+                </strong>
                 في منصة CampusGive. سعداء بوجودك معنا لتسهيل الرحلة الدراسية ومشاركة التبرعات مع زملائك.
             </p>
 
@@ -158,6 +167,5 @@ $result = mysqli_query($conn, $query);
     unset($_SESSION['welcome_message']);
 endif;
 ?>
-
 
 <?php include '../includes/footer.php'; ?>

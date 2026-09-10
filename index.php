@@ -5,12 +5,15 @@ if (session_status() === PHP_SESSION_NONE) {
 include 'includes/db.php';
 include 'includes/header.php';
 
-// جلب أحدث 3 تبرعات متاحة للعرض في الصفحة الرئيسية
+// جلب أحدث 3 تبرعات متاحة للعرض في الصفحة الرئيسية<?php
 $query = "SELECT donations.*, users.fullname FROM donations 
           JOIN users ON donations.user_id = users.id 
           WHERE donations.status = 'approved'
           ORDER BY donations.created_at DESC LIMIT 3";
-$result = mysqli_query($conn, $query);
+
+// تمرير المتغير $query بدلاً من النص الناقص
+$stmt = $conn->query($query);
+$donations = $stmt->fetchAll();
 ?>
 
 <!-- Hero Section -->
@@ -174,43 +177,47 @@ $result = mysqli_query($conn, $query);
             عرض الكل <i class="fa-solid fa-arrow-left ms-1"></i>
         </a>
     </div>
-
     <div class="row g-4">
-        <?php if ($result && mysqli_num_rows($result) > 0): ?>
-            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+        <?php if (!empty($donations)): ?>
+            <?php foreach ($donations as $row): ?>
                 <div class="col-md-4">
                     <div class="card h-100 rounded-4 overflow-hidden shadow-sm">
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="badge badge-category px-3 py-2 rounded-pill">
-                                    <?php echo htmlspecialchars($row['category']); ?>
+                                    <?php echo htmlspecialchars($row['category'] ?? 'عام'); ?>
                                 </span>
                                 <span class="badge-status badge-approved">متاح</span>
                             </div>
-                            <h5 class="card-title fw-bold mb-2 text-truncate" style="color: var(--text-dark);">
+                            <h5 class="card-title fw-bold mb-2 text-truncate">
                                 <?php echo htmlspecialchars($row['title']); ?>
                             </h5>
                             <p class="card-text flex-grow-1">
                                 <?php echo htmlspecialchars($row['description']); ?>
                             </p>
                             <div class="flex-spacer"></div>
-                            <div class="card-footer-custom">
-                                <span class="small fw-medium text-truncate" style="color: var(--text-muted); max-width: 140px;">
+                            <div
+                                class="card-footer-custom d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                <span class="small fw-medium text-truncate">
                                     <i class="fa-regular fa-user me-1"></i><?php echo htmlspecialchars($row['fullname']); ?>
                                 </span>
                                 <a href="donations/details.php?id=<?php echo $row['id']; ?>"
-                                    class="btn btn-campus-outline btn-sm px-3 rounded-pill fw-semibold">التفاصيل</a>
+                                    class="btn btn-campus-outline btn-sm px-3 rounded-pill">
+                                    التفاصيل
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         <?php else: ?>
             <div class="col-12 text-center py-4">
                 <p class="text-muted">لا توجد تبرعات مضافة حالياً.</p>
             </div>
         <?php endif; ?>
     </div>
+
+
 </section>
 <!-- Categories Section -->
 <section class="py-5">

@@ -1,0 +1,123 @@
+/* ==========================================
+   Donation Details & Glass Modal Styling
+   ========================================== */
+
+/* كارت التفاصيل مع فريم بلون هادئ من الباليت */
+.glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    /* إطار ناعم ولطيف بدرجة Mauve */
+    border: 2px solid rgba(104, 58, 70, 0.18) !important;
+    border-radius: 20px;
+    /* ظل خفيف ودافي بلون الـ Plum */
+    box-shadow: 0 10px 30px rgba(104, 58, 70, 0.08) !important;
+    transition: all 0.3s ease;
+}
+
+/* فريم إضافي ناعم للصورة نفسها 
+.detail-img {
+    width: 100%;
+    height: 380px;
+    /* ارتفاع ممتاز يملا الفراغ تماماً 
+    object-fit: cover;
+    /* بيخلي الصورة تملى الكارد من غير ما تتمط أو تتشوه 
+    border: 1px solid rgba(104, 58, 70, 0.15) !important;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);*/
+
+.detail-img {
+    width: 100%;
+    max-height: 320px;
+    /* الارتفاع المثالي لمسافة النص على اليمين */
+    object-fit: contain;
+    /* عشان الصورة تظهر كاملة جوه الفريم من غير ما تتقص */
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 8px;
+    border: 1px solid rgba(104, 58, 70, 0.1);
+}
+
+/* إعطاء مساحة مريحة تحت الكارد قبل الفوتر */
+.glass-card {
+    margin-bottom: 3rem !important;
+}
+
+/* الألوان الأساسية الخاصة بالتنسيق */
+.text-plum {
+    color: var(--primary-color, #683A46) !important;
+}
+
+.badge-mauve {
+    background-color: rgba(104, 58, 70, 0.15);
+    color: var(--primary-color, #683A46);
+    border: 1px solid rgba(104, 58, 70, 0.3);
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.btn-plum {
+    background-color: var(--primary-color, #683A46);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-plum:hover {
+    background-color: #522d37;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(104, 58, 70, 0.3);
+}
+
+.btn-outline-mauve {
+    border: 2px solid var(--primary-color, #683A46);
+    color: var(--primary-color, #683A46);
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-weight: 600;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-mauve:hover {
+    background-color: var(--primary-color, #683A46);
+    color: #ffffff;
+}
+
+/* ==========================================
+   Glassmorphic Modal (النافذة المنبثقة)
+   ========================================== */
+
+.glass-modal {
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 16px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.glass-modal .modal-header {
+    border-bottom: 1px solid rgba(104, 58, 70, 0.1);
+}
+
+.glass-modal .modal-footer {
+    border-top: 1px solid rgba(104, 58, 70, 0.1);
+}
+
+.glass-modal .form-control {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(104, 58, 70, 0.2);
+    border-radius: 8px;
+}
+
+.glass-modal .form-control:focus {
+    background: #ffffff;
+    border-color: var(--primary-color, #683A46);
+    box-shadow: 0 0 0 0.2rem rgba(104, 58, 70, 0.15);
+}

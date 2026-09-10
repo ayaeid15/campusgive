@@ -1,28 +1,43 @@
 <?php
-require_once '../includes/db.php';
 session_start();
+require_once '../includes/db.php';
 
 $error = '';
 
+// التأكد من أن الإرسال تم عبر دالة POST (عند الضغط على زر الدخول فقط)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
+    $password = trim($_POST['password'] ?? '');
 
-    if (empty($email) || empty($password)) {
-        $error = 'يرجى إدخال البريد الإلكتروني وكلمة المرور';
-    } else {
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        $user = $stmt->fetch();
+    if (!empty($email) && !empty($password)) {
+        try {
+            // تحضير الاستعلام بـ PDO بدلاً من MySQLi
+            $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
+            $stmt->execute(['email' => $email]);
+            $user = $stmt->fetch();
 
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['full_name'];
-            header('Location: /campusgive/index.php');
-            exit();
-        } else {
-            $error = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+            // التحقق من وجود المستخدم وصحة كلمة المرور (يدعم التشفير أو النص العادي)
+            if ($user && (password_verify($password, $user['password']) || $password === $user['password'])) {
+
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['fullname'] = $user['fullname'];
+                $_SESSION['role'] = $user['role'];
+
+                // التوجيه حسب نوع المستخدم
+                if ($user['role'] === 'admin') {
+                    header("Location: ../admin/dashboard.php");
+                } else {
+                    header("Location: ../index.php");
+                }
+                exit();
+            } else {
+                $error = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
+            }
+        } catch (PDOException $e) {
+            $error = "حدث خطأ أثناء الاتصال بقاعدة البيانات";
         }
+    } else {
+        $error = "يرجى إدخال جميع البيانات المطلوبة";
     }
 }
 ?>
@@ -64,7 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="mb-3">
                     <label class="form-label small fw-bold text-secondary">البريد الإلكتروني</label>
                     <input type="email" name="email" class="form-control rounded-pill px-3"
-                        placeholder="example@univ.edu.eg" required>
+                        placeholder="example@univ.edu.eg" required
+                        value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
                 </div>
 
                 <div class="mb-4">

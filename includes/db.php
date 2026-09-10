@@ -1,15 +1,31 @@
 <?php
-$host     = "localhost";
-$db_user  = "root";
-$db_pass  = "";
-$db_name  = "campusgive_db";
 
-$conn = mysqli_connect($host, $db_user, $db_pass, $db_name);
+$host = "localhost";
+$dbname = "campusgive_db";
+$username = "root";
+$password = "";
 
-if (!$conn) {
-    die("فشل الاتصال بقاعدة البيانات: " . mysqli_connect_error());
+try {
+
+    $conn = new PDO(
+        "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
+        $username,
+        $password
+    );
+
+    $conn->setAttribute(
+        PDO::ATTR_ERRMODE,
+        PDO::ERRMODE_EXCEPTION
+    );
+
+    $conn->setAttribute(
+        PDO::ATTR_DEFAULT_FETCH_MODE,
+        PDO::FETCH_ASSOC
+    );
+
+} catch (PDOException $e) {
+
+    die("حدث خطأ في الاتصال بقاعدة البيانات");
+
 }
-
-// ضبط الترميز لدعم اللغة العربية
-mysqli_set_charset($conn, "utf8mb4");
 ?>
